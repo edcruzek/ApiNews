@@ -1,0 +1,2489 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "ApiNews y laboratorio Express",
+    "version": "1.0.0",
+    "description": "Curso completo con MySQL real. Los datos son de demostración. Los métodos de escritura en catálogos exigen perfil Administrador. Noticias de contribuidores requieren aprobación."
+  },
+  "servers": [
+    {
+      "url": "/"
+    }
+  ],
+  "components": {
+    "schemas": {
+      "Categoria": {
+        "type": "object",
+        "required": [
+          "nombre"
+        ],
+        "properties": {
+          "nombre": {
+            "type": "string",
+            "minLength": 2,
+            "maxLength": 100
+          },
+          "descripcion": {
+            "type": "string",
+            "maxLength": 2000
+          }
+        }
+      },
+      "Estado": {
+        "type": "object",
+        "required": [
+          "nombre"
+        ],
+        "properties": {
+          "nombre": {
+            "type": "string",
+            "minLength": 2,
+            "maxLength": 100
+          }
+        }
+      },
+      "Perfil": {
+        "type": "object",
+        "required": [
+          "nombre"
+        ],
+        "properties": {
+          "nombre": {
+            "type": "string",
+            "minLength": 2,
+            "maxLength": 100
+          }
+        }
+      },
+      "Registro": {
+        "type": "object",
+        "required": [
+          "nombre",
+          "apellido",
+          "correo",
+          "password",
+          "estado_id"
+        ],
+        "properties": {
+          "nombre": {
+            "type": "string",
+            "minLength": 2
+          },
+          "apellido": {
+            "type": "string",
+            "minLength": 2
+          },
+          "correo": {
+            "type": "string",
+            "format": "email"
+          },
+          "password": {
+            "type": "string",
+            "minLength": 8,
+            "format": "password"
+          },
+          "estado_id": {
+            "type": "integer",
+            "minimum": 1
+          }
+        }
+      },
+      "Login": {
+        "type": "object",
+        "required": [
+          "correo",
+          "password"
+        ],
+        "properties": {
+          "correo": {
+            "type": "string",
+            "format": "email"
+          },
+          "password": {
+            "type": "string",
+            "format": "password"
+          }
+        }
+      },
+      "Noticia": {
+        "type": "object",
+        "required": [
+          "titulo",
+          "contenido",
+          "categoria_id",
+          "estado_id"
+        ],
+        "properties": {
+          "titulo": {
+            "type": "string",
+            "minLength": 5,
+            "maxLength": 180
+          },
+          "contenido": {
+            "type": "string",
+            "minLength": 10
+          },
+          "categoria_id": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "estado_id": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "imagen": {
+            "type": "string",
+            "nullable": true,
+            "maxLength": 1000000
+          }
+        }
+      },
+      "UsuarioPractica": {
+        "type": "object",
+        "required": [
+          "nombre",
+          "edad"
+        ],
+        "properties": {
+          "nombre": {
+            "type": "string",
+            "minLength": 2
+          },
+          "edad": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 120
+          }
+        }
+      },
+      "Estatus": {
+        "type": "object",
+        "required": [
+          "estatus"
+        ],
+        "properties": {
+          "estatus": {
+            "type": "string",
+            "enum": [
+              "aprobada",
+              "rechazada"
+            ]
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "BearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  },
+  "paths": {
+    "/api/salud": {
+      "get": {
+        "summary": "Comprobar Express y MySQL",
+        "tags": [
+          "salud"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Consulta correcta"
+          },
+          "201": {
+            "description": "Registro creado"
+          },
+          "204": {
+            "description": "Eliminado sin cuerpo"
+          },
+          "401": {
+            "description": "Sin autenticación válida"
+          },
+          "403": {
+            "description": "Sin permiso"
+          },
+          "404": {
+            "description": "No encontrado"
+          },
+          "409": {
+            "description": "Conflicto de datos"
+          },
+          "422": {
+            "description": "Validación incorrecta"
+          },
+          "503": {
+            "description": "Mantenimiento de práctica"
+          }
+        }
+      }
+    },
+    "/api/info": {
+      "get": {
+        "summary": "Consultar entorno actual",
+        "tags": [
+          "info"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Consulta correcta"
+          },
+          "201": {
+            "description": "Registro creado"
+          },
+          "204": {
+            "description": "Eliminado sin cuerpo"
+          },
+          "401": {
+            "description": "Sin autenticación válida"
+          },
+          "403": {
+            "description": "Sin permiso"
+          },
+          "404": {
+            "description": "No encontrado"
+          },
+          "409": {
+            "description": "Conflicto de datos"
+          },
+          "422": {
+            "description": "Validación incorrecta"
+          },
+          "503": {
+            "description": "Mantenimiento de práctica"
+          }
+        }
+      }
+    },
+    "/api/categorias": {
+      "get": {
+        "summary": "Listar categorias",
+        "tags": [
+          "categorias"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Consulta correcta"
+          },
+          "201": {
+            "description": "Registro creado"
+          },
+          "204": {
+            "description": "Eliminado sin cuerpo"
+          },
+          "401": {
+            "description": "Sin autenticación válida"
+          },
+          "403": {
+            "description": "Sin permiso"
+          },
+          "404": {
+            "description": "No encontrado"
+          },
+          "409": {
+            "description": "Conflicto de datos"
+          },
+          "422": {
+            "description": "Validación incorrecta"
+          },
+          "503": {
+            "description": "Mantenimiento de práctica"
+          }
+        }
+      },
+      "post": {
+        "summary": "Crear categorias como administrador",
+        "tags": [
+          "categorias"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Consulta correcta"
+          },
+          "201": {
+            "description": "Registro creado"
+          },
+          "204": {
+            "description": "Eliminado sin cuerpo"
+          },
+          "401": {
+            "description": "Sin autenticación válida"
+          },
+          "403": {
+            "description": "Sin permiso"
+          },
+          "404": {
+            "description": "No encontrado"
+          },
+          "409": {
+            "description": "Conflicto de datos"
+          },
+          "422": {
+            "description": "Validación incorrecta"
+          },
+          "503": {
+            "description": "Mantenimiento de práctica"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Categoria"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/categorias/{id}": {
+      "get": {
+        "summary": "Consultar categorias por ID",
+        "tags": [
+          "categorias"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Consulta correcta"
+          },
+          "201": {
+            "description": "Registro creado"
+          },
+          "204": {
+            "description": "Eliminado sin cuerpo"
+          },
+          "401": {
+            "description": "Sin autenticación válida"
+          },
+          "403": {
+            "description": "Sin permiso"
+          },
+          "404": {
+            "description": "No encontrado"
+          },
+          "409": {
+            "description": "Conflicto de datos"
+          },
+          "422": {
+            "description": "Validación incorrecta"
+          },
+          "503": {
+            "description": "Mantenimiento de práctica"
+          }
+        }
+      },
+      "put": {
+        "summary": "Actualizar categorias como administrador",
+        "tags": [
+          "categorias"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Consulta correcta"
+          },
+          "201": {
+            "description": "Registro creado"
+          },
+          "204": {
+            "description": "Eliminado sin cuerpo"
+          },
+          "401": {
+            "description": "Sin autenticación válida"
+          },
+          "403": {
+            "description": "Sin permiso"
+          },
+          "404": {
+            "description": "No encontrado"
+          },
+          "409": {
+            "description": "Conflicto de datos"
+          },
+          "422": {
+            "description": "Validación incorrecta"
+          },
+          "503": {
+            "description": "Mantenimiento de práctica"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Categoria"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      },
+      "delete": {
+        "summary": "Eliminar categorias si no tiene relaciones",
+        "tags": [
+          "categorias"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Consulta correcta"
+          },
+          "201": {
+            "description": "Registro creado"
+          },
+          "204": {
+            "description": "Eliminado sin cuerpo"
+          },
+          "401": {
+            "description": "Sin autenticación válida"
+          },
+          "403": {
+            "description": "Sin permiso"
+          },
+          "404": {
+            "description": "No encontrado"
+          },
+          "409": {
+            "description": "Conflicto de datos"
+          },
+          "422": {
+            "description": "Validación incorrecta"
+          },
+          "503": {
+            "description": "Mantenimiento de práctica"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/estados": {
+      "get": {
+        "summary": "Listar estados",
+        "tags": [
+          "estados"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Consulta correcta"
+          },
+          "201": {
+            "description": "Registro creado"
+          },
+          "204": {
+            "description": "Eliminado sin cuerpo"
+          },
+          "401": {
+            "description": "Sin autenticación válida"
+          },
+          "403": {
+            "description": "Sin permiso"
+          },
+          "404": {
+            "description": "No encontrado"
+          },
+          "409": {
+            "description": "Conflicto de datos"
+          },
+          "422": {
+            "description": "Validación incorrecta"
+          },
+          "503": {
+            "description": "Mantenimiento de práctica"
+          }
+        }
+      },
+      "post": {
+        "summary": "Crear estados como administrador",
+        "tags": [
+          "estados"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Consulta correcta"
+          },
+          "201": {
+            "description": "Registro creado"
+          },
+          "204": {
+            "description": "Eliminado sin cuerpo"
+          },
+          "401": {
+            "description": "Sin autenticación válida"
+          },
+          "403": {
+            "description": "Sin permiso"
+          },
+          "404": {
+            "description": "No encontrado"
+          },
+          "409": {
+            "description": "Conflicto de datos"
+          },
+          "422": {
+            "description": "Validación incorrecta"
+          },
+          "503": {
+            "description": "Mantenimiento de práctica"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Estado"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/estados/{id}": {
+      "get": {
+        "summary": "Consultar estados por ID",
+        "tags": [
+          "estados"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Consulta correcta"
+          },
+          "201": {
+            "description": "Registro creado"
+          },
+          "204": {
+            "description": "Eliminado sin cuerpo"
+          },
+          "401": {
+            "description": "Sin autenticación válida"
+          },
+          "403": {
+            "description": "Sin permiso"
+          },
+          "404": {
+            "description": "No encontrado"
+          },
+          "409": {
+            "description": "Conflicto de datos"
+          },
+          "422": {
+            "description": "Validación incorrecta"
+          },
+          "503": {
+            "description": "Mantenimiento de práctica"
+          }
+        }
+      },
+      "put": {
+        "summary": "Actualizar estados como administrador",
+        "tags": [
+          "estados"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Consulta correcta"
+          },
+          "201": {
+            "description": "Registro creado"
+          },
+          "204": {
+            "description": "Eliminado sin cuerpo"
+          },
+          "401": {
+            "description": "Sin autenticación válida"
+          },
+          "403": {
+            "description": "Sin permiso"
+          },
+          "404": {
+            "description": "No encontrado"
+          },
+          "409": {
+            "description": "Conflicto de datos"
+          },
+          "422": {
+            "description": "Validación incorrecta"
+          },
+          "503": {
+            "description": "Mantenimiento de práctica"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Estado"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      },
+      "delete": {
+        "summary": "Eliminar estados si no tiene relaciones",
+        "tags": [
+          "estados"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Consulta correcta"
+          },
+          "201": {
+            "description": "Registro creado"
+          },
+          "204": {
+            "description": "Eliminado sin cuerpo"
+          },
+          "401": {
+            "description": "Sin autenticación válida"
+          },
+          "403": {
+            "description": "Sin permiso"
+          },
+          "404": {
+            "description": "No encontrado"
+          },
+          "409": {
+            "description": "Conflicto de datos"
+          },
+          "422": {
+            "description": "Validación incorrecta"
+          },
+          "503": {
+            "description": "Mantenimiento de práctica"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/perfiles": {
+      "get": {
+        "summary": "Listar perfiles",
+        "tags": [
+          "perfiles"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Consulta correcta"
+          },
+          "201": {
+            "description": "Registro creado"
+          },
+          "204": {
+            "description": "Eliminado sin cuerpo"
+          },
+          "401": {
+            "description": "Sin autenticación válida"
+          },
+          "403": {
+            "description": "Sin permiso"
+          },
+          "404": {
+            "description": "No encontrado"
+          },
+          "409": {
+            "description": "Conflicto de datos"
+          },
+          "422": {
+            "description": "Validación incorrecta"
+          },
+          "503": {
+            "description": "Mantenimiento de práctica"
+          }
+        }
+      },
+      "post": {
+        "summary": "Crear perfiles como administrador",
+        "tags": [
+          "perfiles"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Consulta correcta"
+          },
+          "201": {
+            "description": "Registro creado"
+          },
+          "204": {
+            "description": "Eliminado sin cuerpo"
+          },
+          "401": {
+            "description": "Sin autenticación válida"
+          },
+          "403": {
+            "description": "Sin permiso"
+          },
+          "404": {
+            "description": "No encontrado"
+          },
+          "409": {
+            "description": "Conflicto de datos"
+          },
+          "422": {
+            "description": "Validación incorrecta"
+          },
+          "503": {
+            "description": "Mantenimiento de práctica"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Perfil"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/perfiles/{id}": {
+      "get": {
+        "summary": "Consultar perfiles por ID",
+        "tags": [
+          "perfiles"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Consulta correcta"
+          },
+          "201": {
+            "description": "Registro creado"
+          },
+          "204": {
+            "description": "Eliminado sin cuerpo"
+          },
+          "401": {
+            "description": "Sin autenticación válida"
+          },
+          "403": {
+            "description": "Sin permiso"
+          },
+          "404": {
+            "description": "No encontrado"
+          },
+          "409": {
+            "description": "Conflicto de datos"
+          },
+          "422": {
+            "description": "Validación incorrecta"
+          },
+          "503": {
+            "description": "Mantenimiento de práctica"
+          }
+        }
+      },
+      "put": {
+        "summary": "Actualizar perfiles como administrador",
+        "tags": [
+          "perfiles"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Consulta correcta"
+          },
+          "201": {
+            "description": "Registro creado"
+          },
+          "204": {
+            "description": "Eliminado sin cuerpo"
+          },
+          "401": {
+            "description": "Sin autenticación válida"
+          },
+          "403": {
+            "description": "Sin permiso"
+          },
+          "404": {
+            "description": "No encontrado"
+          },
+          "409": {
+            "description": "Conflicto de datos"
+          },
+          "422": {
+            "description": "Validación incorrecta"
+          },
+          "503": {
+            "description": "Mantenimiento de práctica"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Perfil"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      },
+      "delete": {
+        "summary": "Eliminar perfiles si no tiene relaciones",
+        "tags": [
+          "perfiles"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Consulta correcta"
+          },
+          "201": {
+            "description": "Registro creado"
+          },
+          "204": {
+            "description": "Eliminado sin cuerpo"
+          },
+          "401": {
+            "description": "Sin autenticación válida"
+          },
+          "403": {
+            "description": "Sin permiso"
+          },
+          "404": {
+            "description": "No encontrado"
+          },
+          "409": {
+            "description": "Conflicto de datos"
+          },
+          "422": {
+            "description": "Validación incorrecta"
+          },
+          "503": {
+            "description": "Mantenimiento de práctica"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/auth/registro": {
+      "post": {
+        "summary": "Registrar un contribuidor",
+        "tags": [
+          "auth"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Consulta correcta"
+          },
+          "201": {
+            "description": "Registro creado"
+          },
+          "204": {
+            "description": "Eliminado sin cuerpo"
+          },
+          "401": {
+            "description": "Sin autenticación válida"
+          },
+          "403": {
+            "description": "Sin permiso"
+          },
+          "404": {
+            "description": "No encontrado"
+          },
+          "409": {
+            "description": "Conflicto de datos"
+          },
+          "422": {
+            "description": "Validación incorrecta"
+          },
+          "503": {
+            "description": "Mantenimiento de práctica"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Registro"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/auth/login": {
+      "post": {
+        "summary": "Obtener un JWT",
+        "tags": [
+          "auth"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Consulta correcta"
+          },
+          "201": {
+            "description": "Registro creado"
+          },
+          "204": {
+            "description": "Eliminado sin cuerpo"
+          },
+          "401": {
+            "description": "Sin autenticación válida"
+          },
+          "403": {
+            "description": "Sin permiso"
+          },
+          "404": {
+            "description": "No encontrado"
+          },
+          "409": {
+            "description": "Conflicto de datos"
+          },
+          "422": {
+            "description": "Validación incorrecta"
+          },
+          "503": {
+            "description": "Mantenimiento de práctica"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Login"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/auth/yo": {
+      "get": {
+        "summary": "Consultar cuenta autenticada",
+        "tags": [
+          "auth"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Consulta correcta"
+          },
+          "201": {
+            "description": "Registro creado"
+          },
+          "204": {
+            "description": "Eliminado sin cuerpo"
+          },
+          "401": {
+            "description": "Sin autenticación válida"
+          },
+          "403": {
+            "description": "Sin permiso"
+          },
+          "404": {
+            "description": "No encontrado"
+          },
+          "409": {
+            "description": "Conflicto de datos"
+          },
+          "422": {
+            "description": "Validación incorrecta"
+          },
+          "503": {
+            "description": "Mantenimiento de práctica"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/usuarios": {
+      "get": {
+        "summary": "Listar usuarios con perfil estado y noticias como administrador",
+        "tags": [
+          "usuarios"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Consulta correcta"
+          },
+          "201": {
+            "description": "Registro creado"
+          },
+          "204": {
+            "description": "Eliminado sin cuerpo"
+          },
+          "401": {
+            "description": "Sin autenticación válida"
+          },
+          "403": {
+            "description": "Sin permiso"
+          },
+          "404": {
+            "description": "No encontrado"
+          },
+          "409": {
+            "description": "Conflicto de datos"
+          },
+          "422": {
+            "description": "Validación incorrecta"
+          },
+          "503": {
+            "description": "Mantenimiento de práctica"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      },
+      "post": {
+        "summary": "Crear usuario como administrador",
+        "tags": [
+          "usuarios"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Consulta correcta"
+          },
+          "201": {
+            "description": "Registro creado"
+          },
+          "204": {
+            "description": "Eliminado sin cuerpo"
+          },
+          "401": {
+            "description": "Sin autenticación válida"
+          },
+          "403": {
+            "description": "Sin permiso"
+          },
+          "404": {
+            "description": "No encontrado"
+          },
+          "409": {
+            "description": "Conflicto de datos"
+          },
+          "422": {
+            "description": "Validación incorrecta"
+          },
+          "503": {
+            "description": "Mantenimiento de práctica"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Registro"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/usuarios/{id}": {
+      "get": {
+        "summary": "Consultar una cuenta propia o como administrador",
+        "tags": [
+          "usuarios"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Consulta correcta"
+          },
+          "201": {
+            "description": "Registro creado"
+          },
+          "204": {
+            "description": "Eliminado sin cuerpo"
+          },
+          "401": {
+            "description": "Sin autenticación válida"
+          },
+          "403": {
+            "description": "Sin permiso"
+          },
+          "404": {
+            "description": "No encontrado"
+          },
+          "409": {
+            "description": "Conflicto de datos"
+          },
+          "422": {
+            "description": "Validación incorrecta"
+          },
+          "503": {
+            "description": "Mantenimiento de práctica"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      },
+      "put": {
+        "summary": "Actualizar usuario como administrador",
+        "tags": [
+          "usuarios"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Consulta correcta"
+          },
+          "201": {
+            "description": "Registro creado"
+          },
+          "204": {
+            "description": "Eliminado sin cuerpo"
+          },
+          "401": {
+            "description": "Sin autenticación válida"
+          },
+          "403": {
+            "description": "Sin permiso"
+          },
+          "404": {
+            "description": "No encontrado"
+          },
+          "409": {
+            "description": "Conflicto de datos"
+          },
+          "422": {
+            "description": "Validación incorrecta"
+          },
+          "503": {
+            "description": "Mantenimiento de práctica"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Registro"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      },
+      "delete": {
+        "summary": "Eliminar usuario sin noticias relacionadas",
+        "tags": [
+          "usuarios"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Consulta correcta"
+          },
+          "201": {
+            "description": "Registro creado"
+          },
+          "204": {
+            "description": "Eliminado sin cuerpo"
+          },
+          "401": {
+            "description": "Sin autenticación válida"
+          },
+          "403": {
+            "description": "Sin permiso"
+          },
+          "404": {
+            "description": "No encontrado"
+          },
+          "409": {
+            "description": "Conflicto de datos"
+          },
+          "422": {
+            "description": "Validación incorrecta"
+          },
+          "503": {
+            "description": "Mantenimiento de práctica"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/noticias": {
+      "get": {
+        "summary": "Listar noticias aprobadas con relaciones",
+        "tags": [
+          "noticias"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "q",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "categoria_id",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "estado_id",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Consulta correcta"
+          },
+          "201": {
+            "description": "Registro creado"
+          },
+          "204": {
+            "description": "Eliminado sin cuerpo"
+          },
+          "401": {
+            "description": "Sin autenticación válida"
+          },
+          "403": {
+            "description": "Sin permiso"
+          },
+          "404": {
+            "description": "No encontrado"
+          },
+          "409": {
+            "description": "Conflicto de datos"
+          },
+          "422": {
+            "description": "Validación incorrecta"
+          },
+          "503": {
+            "description": "Mantenimiento de práctica"
+          }
+        }
+      },
+      "post": {
+        "summary": "Proponer noticia pendiente",
+        "tags": [
+          "noticias"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Consulta correcta"
+          },
+          "201": {
+            "description": "Registro creado"
+          },
+          "204": {
+            "description": "Eliminado sin cuerpo"
+          },
+          "401": {
+            "description": "Sin autenticación válida"
+          },
+          "403": {
+            "description": "Sin permiso"
+          },
+          "404": {
+            "description": "No encontrado"
+          },
+          "409": {
+            "description": "Conflicto de datos"
+          },
+          "422": {
+            "description": "Validación incorrecta"
+          },
+          "503": {
+            "description": "Mantenimiento de práctica"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Noticia"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/noticias/gestion": {
+      "get": {
+        "summary": "Noticias propias o todas como administrador",
+        "tags": [
+          "noticias"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Consulta correcta"
+          },
+          "201": {
+            "description": "Registro creado"
+          },
+          "204": {
+            "description": "Eliminado sin cuerpo"
+          },
+          "401": {
+            "description": "Sin autenticación válida"
+          },
+          "403": {
+            "description": "Sin permiso"
+          },
+          "404": {
+            "description": "No encontrado"
+          },
+          "409": {
+            "description": "Conflicto de datos"
+          },
+          "422": {
+            "description": "Validación incorrecta"
+          },
+          "503": {
+            "description": "Mantenimiento de práctica"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/noticias/{id}": {
+      "get": {
+        "summary": "Consultar noticia aprobada con categoría estado y autor",
+        "tags": [
+          "noticias"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Consulta correcta"
+          },
+          "201": {
+            "description": "Registro creado"
+          },
+          "204": {
+            "description": "Eliminado sin cuerpo"
+          },
+          "401": {
+            "description": "Sin autenticación válida"
+          },
+          "403": {
+            "description": "Sin permiso"
+          },
+          "404": {
+            "description": "No encontrado"
+          },
+          "409": {
+            "description": "Conflicto de datos"
+          },
+          "422": {
+            "description": "Validación incorrecta"
+          },
+          "503": {
+            "description": "Mantenimiento de práctica"
+          }
+        }
+      },
+      "put": {
+        "summary": "Editar noticia propia y volver a pendiente",
+        "tags": [
+          "noticias"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Consulta correcta"
+          },
+          "201": {
+            "description": "Registro creado"
+          },
+          "204": {
+            "description": "Eliminado sin cuerpo"
+          },
+          "401": {
+            "description": "Sin autenticación válida"
+          },
+          "403": {
+            "description": "Sin permiso"
+          },
+          "404": {
+            "description": "No encontrado"
+          },
+          "409": {
+            "description": "Conflicto de datos"
+          },
+          "422": {
+            "description": "Validación incorrecta"
+          },
+          "503": {
+            "description": "Mantenimiento de práctica"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Noticia"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      },
+      "delete": {
+        "summary": "Eliminar noticia propia o como administrador",
+        "tags": [
+          "noticias"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Consulta correcta"
+          },
+          "201": {
+            "description": "Registro creado"
+          },
+          "204": {
+            "description": "Eliminado sin cuerpo"
+          },
+          "401": {
+            "description": "Sin autenticación válida"
+          },
+          "403": {
+            "description": "Sin permiso"
+          },
+          "404": {
+            "description": "No encontrado"
+          },
+          "409": {
+            "description": "Conflicto de datos"
+          },
+          "422": {
+            "description": "Validación incorrecta"
+          },
+          "503": {
+            "description": "Mantenimiento de práctica"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/noticias/{id}/estatus": {
+      "patch": {
+        "summary": "Moderar noticia como administrador",
+        "tags": [
+          "noticias"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Consulta correcta"
+          },
+          "201": {
+            "description": "Registro creado"
+          },
+          "204": {
+            "description": "Eliminado sin cuerpo"
+          },
+          "401": {
+            "description": "Sin autenticación válida"
+          },
+          "403": {
+            "description": "Sin permiso"
+          },
+          "404": {
+            "description": "No encontrado"
+          },
+          "409": {
+            "description": "Conflicto de datos"
+          },
+          "422": {
+            "description": "Validación incorrecta"
+          },
+          "503": {
+            "description": "Mantenimiento de práctica"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Estatus"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/usuarios-practica": {
+      "get": {
+        "summary": "Consultar arreglo con filtros",
+        "tags": [
+          "usuarios-practica"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "q",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "edadMin",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Consulta correcta"
+          },
+          "201": {
+            "description": "Registro creado"
+          },
+          "204": {
+            "description": "Eliminado sin cuerpo"
+          },
+          "401": {
+            "description": "Sin autenticación válida"
+          },
+          "403": {
+            "description": "Sin permiso"
+          },
+          "404": {
+            "description": "No encontrado"
+          },
+          "409": {
+            "description": "Conflicto de datos"
+          },
+          "422": {
+            "description": "Validación incorrecta"
+          },
+          "503": {
+            "description": "Mantenimiento de práctica"
+          }
+        }
+      },
+      "post": {
+        "summary": "Agregar al arreglo en memoria",
+        "tags": [
+          "usuarios-practica"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Consulta correcta"
+          },
+          "201": {
+            "description": "Registro creado"
+          },
+          "204": {
+            "description": "Eliminado sin cuerpo"
+          },
+          "401": {
+            "description": "Sin autenticación válida"
+          },
+          "403": {
+            "description": "Sin permiso"
+          },
+          "404": {
+            "description": "No encontrado"
+          },
+          "409": {
+            "description": "Conflicto de datos"
+          },
+          "422": {
+            "description": "Validación incorrecta"
+          },
+          "503": {
+            "description": "Mantenimiento de práctica"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UsuarioPractica"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/usuarios-practica/{id}": {
+      "get": {
+        "summary": "Obtener usuario del arreglo",
+        "tags": [
+          "usuarios-practica"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Consulta correcta"
+          },
+          "201": {
+            "description": "Registro creado"
+          },
+          "204": {
+            "description": "Eliminado sin cuerpo"
+          },
+          "401": {
+            "description": "Sin autenticación válida"
+          },
+          "403": {
+            "description": "Sin permiso"
+          },
+          "404": {
+            "description": "No encontrado"
+          },
+          "409": {
+            "description": "Conflicto de datos"
+          },
+          "422": {
+            "description": "Validación incorrecta"
+          },
+          "503": {
+            "description": "Mantenimiento de práctica"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Eliminar usuario del arreglo",
+        "tags": [
+          "usuarios-practica"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Consulta correcta"
+          },
+          "201": {
+            "description": "Registro creado"
+          },
+          "204": {
+            "description": "Eliminado sin cuerpo"
+          },
+          "401": {
+            "description": "Sin autenticación válida"
+          },
+          "403": {
+            "description": "Sin permiso"
+          },
+          "404": {
+            "description": "No encontrado"
+          },
+          "409": {
+            "description": "Conflicto de datos"
+          },
+          "422": {
+            "description": "Validación incorrecta"
+          },
+          "503": {
+            "description": "Mantenimiento de práctica"
+          }
+        }
+      }
+    },
+    "/api/practicas/inicio": {
+      "get": {
+        "summary": "Primer servidor y middleware",
+        "tags": [
+          "practicas"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Consulta correcta"
+          },
+          "201": {
+            "description": "Registro creado"
+          },
+          "204": {
+            "description": "Eliminado sin cuerpo"
+          },
+          "401": {
+            "description": "Sin autenticación válida"
+          },
+          "403": {
+            "description": "Sin permiso"
+          },
+          "404": {
+            "description": "No encontrado"
+          },
+          "409": {
+            "description": "Conflicto de datos"
+          },
+          "422": {
+            "description": "Validación incorrecta"
+          },
+          "503": {
+            "description": "Mantenimiento de práctica"
+          }
+        }
+      }
+    },
+    "/api/practicas/estados": {
+      "get": {
+        "summary": "Obtener cinco estados",
+        "tags": [
+          "practicas"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Consulta correcta"
+          },
+          "201": {
+            "description": "Registro creado"
+          },
+          "204": {
+            "description": "Eliminado sin cuerpo"
+          },
+          "401": {
+            "description": "Sin autenticación válida"
+          },
+          "403": {
+            "description": "Sin permiso"
+          },
+          "404": {
+            "description": "No encontrado"
+          },
+          "409": {
+            "description": "Conflicto de datos"
+          },
+          "422": {
+            "description": "Validación incorrecta"
+          },
+          "503": {
+            "description": "Mantenimiento de práctica"
+          }
+        }
+      }
+    },
+    "/api/practicas/pares": {
+      "get": {
+        "summary": "Obtener diez pares positivos",
+        "tags": [
+          "practicas"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Consulta correcta"
+          },
+          "201": {
+            "description": "Registro creado"
+          },
+          "204": {
+            "description": "Eliminado sin cuerpo"
+          },
+          "401": {
+            "description": "Sin autenticación válida"
+          },
+          "403": {
+            "description": "Sin permiso"
+          },
+          "404": {
+            "description": "No encontrado"
+          },
+          "409": {
+            "description": "Conflicto de datos"
+          },
+          "422": {
+            "description": "Validación incorrecta"
+          },
+          "503": {
+            "description": "Mantenimiento de práctica"
+          }
+        }
+      }
+    },
+    "/api/practicas/iguales/{a}/{b}": {
+      "get": {
+        "summary": "Comparar dos números",
+        "tags": [
+          "practicas"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "a",
+            "required": true,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "in": "path",
+            "name": "b",
+            "required": true,
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Consulta correcta"
+          },
+          "201": {
+            "description": "Registro creado"
+          },
+          "204": {
+            "description": "Eliminado sin cuerpo"
+          },
+          "401": {
+            "description": "Sin autenticación válida"
+          },
+          "403": {
+            "description": "Sin permiso"
+          },
+          "404": {
+            "description": "No encontrado"
+          },
+          "409": {
+            "description": "Conflicto de datos"
+          },
+          "422": {
+            "description": "Validación incorrecta"
+          },
+          "503": {
+            "description": "Mantenimiento de práctica"
+          }
+        }
+      }
+    },
+    "/api/practicas/modulos/{a}/{b}": {
+      "get": {
+        "summary": "Importar y ejecutar el módulo de operaciones",
+        "tags": [
+          "practicas"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "a",
+            "required": true,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "in": "path",
+            "name": "b",
+            "required": true,
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Consulta correcta"
+          },
+          "201": {
+            "description": "Registro creado"
+          },
+          "204": {
+            "description": "Eliminado sin cuerpo"
+          },
+          "401": {
+            "description": "Sin autenticación válida"
+          },
+          "403": {
+            "description": "Sin permiso"
+          },
+          "404": {
+            "description": "No encontrado"
+          },
+          "409": {
+            "description": "Conflicto de datos"
+          },
+          "422": {
+            "description": "Validación incorrecta"
+          },
+          "503": {
+            "description": "Mantenimiento de práctica"
+          }
+        }
+      }
+    },
+    "/api/practicas/eventos": {
+      "post": {
+        "summary": "Emitir el evento saludo",
+        "tags": [
+          "practicas"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Consulta correcta"
+          },
+          "201": {
+            "description": "Registro creado"
+          },
+          "204": {
+            "description": "Eliminado sin cuerpo"
+          },
+          "401": {
+            "description": "Sin autenticación válida"
+          },
+          "403": {
+            "description": "Sin permiso"
+          },
+          "404": {
+            "description": "No encontrado"
+          },
+          "409": {
+            "description": "Conflicto de datos"
+          },
+          "422": {
+            "description": "Validación incorrecta"
+          },
+          "503": {
+            "description": "Mantenimiento de práctica"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "nombre"
+                ],
+                "properties": {
+                  "nombre": {
+                    "type": "string",
+                    "minLength": 2
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/practicas/error": {
+      "get": {
+        "summary": "Provocar respuesta 503",
+        "tags": [
+          "practicas"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Consulta correcta"
+          },
+          "201": {
+            "description": "Registro creado"
+          },
+          "204": {
+            "description": "Eliminado sin cuerpo"
+          },
+          "401": {
+            "description": "Sin autenticación válida"
+          },
+          "403": {
+            "description": "Sin permiso"
+          },
+          "404": {
+            "description": "No encontrado"
+          },
+          "409": {
+            "description": "Conflicto de datos"
+          },
+          "422": {
+            "description": "Validación incorrecta"
+          },
+          "503": {
+            "description": "Mantenimiento de práctica"
+          }
+        }
+      }
+    },
+    "/api/practicas/solicitudes": {
+      "get": {
+        "summary": "Registro de la sesión indicada en X-Demo-Session",
+        "tags": [
+          "practicas"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Consulta correcta"
+          },
+          "201": {
+            "description": "Registro creado"
+          },
+          "204": {
+            "description": "Eliminado sin cuerpo"
+          },
+          "401": {
+            "description": "Sin autenticación válida"
+          },
+          "403": {
+            "description": "Sin permiso"
+          },
+          "404": {
+            "description": "No encontrado"
+          },
+          "409": {
+            "description": "Conflicto de datos"
+          },
+          "422": {
+            "description": "Validación incorrecta"
+          },
+          "503": {
+            "description": "Mantenimiento de práctica"
+          }
+        }
+      }
+    },
+    "/api/teoria/usuarios/{id}": {
+      "get": {
+        "summary": "Leer req.params",
+        "tags": [
+          "teoria"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Consulta correcta"
+          },
+          "201": {
+            "description": "Registro creado"
+          },
+          "204": {
+            "description": "Eliminado sin cuerpo"
+          },
+          "401": {
+            "description": "Sin autenticación válida"
+          },
+          "403": {
+            "description": "Sin permiso"
+          },
+          "404": {
+            "description": "No encontrado"
+          },
+          "409": {
+            "description": "Conflicto de datos"
+          },
+          "422": {
+            "description": "Validación incorrecta"
+          },
+          "503": {
+            "description": "Mantenimiento de práctica"
+          }
+        }
+      }
+    },
+    "/api/teoria/busqueda": {
+      "get": {
+        "summary": "Leer req.query",
+        "tags": [
+          "teoria"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "nombre",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "edad",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Consulta correcta"
+          },
+          "201": {
+            "description": "Registro creado"
+          },
+          "204": {
+            "description": "Eliminado sin cuerpo"
+          },
+          "401": {
+            "description": "Sin autenticación válida"
+          },
+          "403": {
+            "description": "Sin permiso"
+          },
+          "404": {
+            "description": "No encontrado"
+          },
+          "409": {
+            "description": "Conflicto de datos"
+          },
+          "422": {
+            "description": "Validación incorrecta"
+          },
+          "503": {
+            "description": "Mantenimiento de práctica"
+          }
+        }
+      }
+    },
+    "/api/teoria/usuarios": {
+      "post": {
+        "summary": "Leer req.body",
+        "tags": [
+          "teoria"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Consulta correcta"
+          },
+          "201": {
+            "description": "Registro creado"
+          },
+          "204": {
+            "description": "Eliminado sin cuerpo"
+          },
+          "401": {
+            "description": "Sin autenticación válida"
+          },
+          "403": {
+            "description": "Sin permiso"
+          },
+          "404": {
+            "description": "No encontrado"
+          },
+          "409": {
+            "description": "Conflicto de datos"
+          },
+          "422": {
+            "description": "Validación incorrecta"
+          },
+          "503": {
+            "description": "Mantenimiento de práctica"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,13 @@
+const { Router } = require('express');
+const { body, param } = require('express-validator');
+const { validate } = require('../validators/common');
+const r = Router(); const f = require('../practicas/Actividad24/funciones');
+r.get('/inicio', (req, res) => res.json({ mensaje: 'Hola desde Express', metodo: req.method, middleware: res.get('X-Curso-Middleware') }));
+r.get('/estados', (req, res) => res.json(f.estados()));
+r.get('/pares', (req, res) => res.json({ numeros: f.pares(), criterio: 'Los primeros diez pares positivos: 2 a 20.' }));
+r.get('/iguales/:a/:b', param('a').isFloat(), param('b').isFloat(), validate, (req, res) => res.json({ a: Number(req.params.a), b: Number(req.params.b), iguales: f.iguales(Number(req.params.a), Number(req.params.b)) }));
+r.get('/modulos/:a/:b', param('a').isFloat(), param('b').isFloat(), validate, (req, res) => { const a = Number(req.params.a), b = Number(req.params.b), o = require('../practicas/PracticaModulos/operations'); res.json({ suma: o.sumar(a, b), resta: o.restar(a, b), multiplicacion: o.multiplicar(a, b), division: b === 0 ? 'No se puede dividir entre cero.' : o.dividir(a, b), modulo: 'operations.js exportado con module.exports e importado con require' }); });
+r.post('/eventos', body('nombre').isString().bail().trim().isLength({ min: 2, max: 80 }), validate, (req, res) => res.json({ pasos: require('../practicas/PracticaEventos/app')(req.body.nombre), nota: 'EventEmitter ejecuta estos listeners de forma síncrona. No toda operación de Node es asíncrona.' }));
+r.get('/error', (req, res, next) => next(Object.assign(new Error('SERVIDOR EN MANTENIMIENTO'), { status: 503 })));
+r.get('/solicitudes', require('../middlewares/logger').getLogs);
+module.exports = r;

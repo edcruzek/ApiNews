@@ -1,0 +1,12 @@
+const { Router } = require('express');
+const { authenticate, administrator } = require('../middlewares/auth');
+const { id, validate } = require('../validators/common');
+const rules = require('../validators/UserValidator');
+const c = require('../controllers/UserController');
+const r = Router();
+r.use(authenticate);
+r.get('/', administrator, c.list); r.get('/:id', id, validate, c.one);
+r.post('/', administrator, rules, validate, c.create);
+r.put('/:id', administrator, id, rules, validate, c.update);
+r.delete('/:id', administrator, id, validate, c.remove);
+module.exports = r;

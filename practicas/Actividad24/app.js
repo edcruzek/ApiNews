@@ -1,0 +1,11 @@
+const express = require('express');
+const f = require('./funciones');
+const app = express();
+app.use((req, res, next) => { console.log('SE HA REALIZADO UNA SOLICITUD'); next(); });
+app.get('/estados', (req, res) => res.json(f.estados()));
+app.get('/pares', (req, res) => res.json(f.pares()));
+app.get('/iguales/:a/:b', (req, res) => { const a = Number(req.params.a), b = Number(req.params.b); if (!Number.isFinite(a) || !Number.isFinite(b)) return res.status(422).json({ error: 'Usa dos números.' }); res.json(f.iguales(a, b)); });
+app.get('/error', (req, res, next) => next(Object.assign(new Error('SERVIDOR EN MANTENIMIENTO'), { status: 503 })));
+app.use((err, req, res, next) => res.status(err.status || 500).json({ error: err.message }));
+if (require.main === module) app.listen(3102, () => console.log('Actividad24 en http://localhost:3102'));
+module.exports = app;

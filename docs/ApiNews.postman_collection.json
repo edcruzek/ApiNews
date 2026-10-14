@@ -1,0 +1,2127 @@
+{
+  "info": {
+    "name": "Curso Express y ApiNews",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3100"
+    },
+    {
+      "key": "id",
+      "value": "1"
+    },
+    {
+      "key": "token",
+      "value": ""
+    },
+    {
+      "key": "demoSession",
+      "value": "postman-demostracion"
+    }
+  ],
+  "item": [
+    {
+      "name": "salud",
+      "item": [
+        {
+          "name": "Comprobar Express y MySQL",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Demo-Session",
+                "value": "{{demoSession}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/salud",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "salud"
+              ]
+            },
+            "description": "Comprobar Express y MySQL"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Respuesta HTTP reconocida\", function () { pm.expect(pm.response.code).to.be.oneOf([200,201,204,400,401,403,404,409,413,422,429,503]); });"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "info",
+      "item": [
+        {
+          "name": "Consultar entorno actual",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Demo-Session",
+                "value": "{{demoSession}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/info",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "info"
+              ]
+            },
+            "description": "Consultar entorno actual"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Respuesta HTTP reconocida\", function () { pm.expect(pm.response.code).to.be.oneOf([200,201,204,400,401,403,404,409,413,422,429,503]); });"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "categorias",
+      "item": [
+        {
+          "name": "Listar categorias",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Demo-Session",
+                "value": "{{demoSession}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/categorias",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "categorias"
+              ]
+            },
+            "description": "Listar categorias"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Respuesta HTTP reconocida\", function () { pm.expect(pm.response.code).to.be.oneOf([200,201,204,400,401,403,404,409,413,422,429,503]); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Consultar categorias por ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Demo-Session",
+                "value": "{{demoSession}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/categorias/{{id}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "categorias",
+                "{{id}}"
+              ]
+            },
+            "description": "Consultar categorias por ID"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Respuesta HTTP reconocida\", function () { pm.expect(pm.response.code).to.be.oneOf([200,201,204,400,401,403,404,409,413,422,429,503]); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Crear categorias como administrador",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Demo-Session",
+                "value": "{{demoSession}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/categorias",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "categorias"
+              ]
+            },
+            "description": "Crear categorias como administrador",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Educación\",\n  \"descripcion\": \"Noticias del curso\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Respuesta HTTP reconocida\", function () { pm.expect(pm.response.code).to.be.oneOf([200,201,204,400,401,403,404,409,413,422,429,503]); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Actualizar categorias como administrador",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "X-Demo-Session",
+                "value": "{{demoSession}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/categorias/{{id}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "categorias",
+                "{{id}}"
+              ]
+            },
+            "description": "Actualizar categorias como administrador",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Educación\",\n  \"descripcion\": \"Noticias del curso\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Respuesta HTTP reconocida\", function () { pm.expect(pm.response.code).to.be.oneOf([200,201,204,400,401,403,404,409,413,422,429,503]); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Eliminar categorias si no tiene relaciones",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "X-Demo-Session",
+                "value": "{{demoSession}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/categorias/{{id}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "categorias",
+                "{{id}}"
+              ]
+            },
+            "description": "Eliminar categorias si no tiene relaciones",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Respuesta HTTP reconocida\", function () { pm.expect(pm.response.code).to.be.oneOf([200,201,204,400,401,403,404,409,413,422,429,503]); });"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "estados",
+      "item": [
+        {
+          "name": "Listar estados",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Demo-Session",
+                "value": "{{demoSession}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/estados",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "estados"
+              ]
+            },
+            "description": "Listar estados"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Respuesta HTTP reconocida\", function () { pm.expect(pm.response.code).to.be.oneOf([200,201,204,400,401,403,404,409,413,422,429,503]); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Consultar estados por ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Demo-Session",
+                "value": "{{demoSession}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/estados/{{id}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "estados",
+                "{{id}}"
+              ]
+            },
+            "description": "Consultar estados por ID"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Respuesta HTTP reconocida\", function () { pm.expect(pm.response.code).to.be.oneOf([200,201,204,400,401,403,404,409,413,422,429,503]); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Crear estados como administrador",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Demo-Session",
+                "value": "{{demoSession}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/estados",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "estados"
+              ]
+            },
+            "description": "Crear estados como administrador",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Nuevo León\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Respuesta HTTP reconocida\", function () { pm.expect(pm.response.code).to.be.oneOf([200,201,204,400,401,403,404,409,413,422,429,503]); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Actualizar estados como administrador",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "X-Demo-Session",
+                "value": "{{demoSession}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/estados/{{id}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "estados",
+                "{{id}}"
+              ]
+            },
+            "description": "Actualizar estados como administrador",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Nuevo León\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Respuesta HTTP reconocida\", function () { pm.expect(pm.response.code).to.be.oneOf([200,201,204,400,401,403,404,409,413,422,429,503]); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Eliminar estados si no tiene relaciones",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "X-Demo-Session",
+                "value": "{{demoSession}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/estados/{{id}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "estados",
+                "{{id}}"
+              ]
+            },
+            "description": "Eliminar estados si no tiene relaciones",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Respuesta HTTP reconocida\", function () { pm.expect(pm.response.code).to.be.oneOf([200,201,204,400,401,403,404,409,413,422,429,503]); });"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "perfiles",
+      "item": [
+        {
+          "name": "Listar perfiles",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Demo-Session",
+                "value": "{{demoSession}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/perfiles",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "perfiles"
+              ]
+            },
+            "description": "Listar perfiles"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Respuesta HTTP reconocida\", function () { pm.expect(pm.response.code).to.be.oneOf([200,201,204,400,401,403,404,409,413,422,429,503]); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Consultar perfiles por ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Demo-Session",
+                "value": "{{demoSession}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/perfiles/{{id}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "perfiles",
+                "{{id}}"
+              ]
+            },
+            "description": "Consultar perfiles por ID"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Respuesta HTTP reconocida\", function () { pm.expect(pm.response.code).to.be.oneOf([200,201,204,400,401,403,404,409,413,422,429,503]); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Crear perfiles como administrador",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Demo-Session",
+                "value": "{{demoSession}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/perfiles",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "perfiles"
+              ]
+            },
+            "description": "Crear perfiles como administrador",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Lector\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Respuesta HTTP reconocida\", function () { pm.expect(pm.response.code).to.be.oneOf([200,201,204,400,401,403,404,409,413,422,429,503]); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Actualizar perfiles como administrador",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "X-Demo-Session",
+                "value": "{{demoSession}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/perfiles/{{id}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "perfiles",
+                "{{id}}"
+              ]
+            },
+            "description": "Actualizar perfiles como administrador",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Lector\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Respuesta HTTP reconocida\", function () { pm.expect(pm.response.code).to.be.oneOf([200,201,204,400,401,403,404,409,413,422,429,503]); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Eliminar perfiles si no tiene relaciones",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "X-Demo-Session",
+                "value": "{{demoSession}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/perfiles/{{id}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "perfiles",
+                "{{id}}"
+              ]
+            },
+            "description": "Eliminar perfiles si no tiene relaciones",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Respuesta HTTP reconocida\", function () { pm.expect(pm.response.code).to.be.oneOf([200,201,204,400,401,403,404,409,413,422,429,503]); });"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "auth",
+      "item": [
+        {
+          "name": "Registrar un contribuidor",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Demo-Session",
+                "value": "{{demoSession}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/registro",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "registro"
+              ]
+            },
+            "description": "Registrar un contribuidor",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Alumno\",\n  \"apellido\": \"Curso\",\n  \"correo\": \"alumno@example.com\",\n  \"password\": \"ClavePractica2026!\",\n  \"estado_id\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Respuesta HTTP reconocida\", function () { pm.expect(pm.response.code).to.be.oneOf([200,201,204,400,401,403,404,409,413,422,429,503]); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Obtener un JWT",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Demo-Session",
+                "value": "{{demoSession}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/login",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "login"
+              ]
+            },
+            "description": "Obtener un JWT",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"correo\": \"admin@curso.local\",\n  \"password\": \"REEMPLAZA_CON_TU_PASSWORD_DE_DEMOSTRACION\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Respuesta HTTP reconocida\", function () { pm.expect(pm.response.code).to.be.oneOf([200,201,204,400,401,403,404,409,413,422,429,503]); });",
+                  "if(pm.response.code===200){pm.collectionVariables.set(\"token\",pm.response.json().token);}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Consultar cuenta autenticada",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Demo-Session",
+                "value": "{{demoSession}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/yo",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "yo"
+              ]
+            },
+            "description": "Consultar cuenta autenticada",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Respuesta HTTP reconocida\", function () { pm.expect(pm.response.code).to.be.oneOf([200,201,204,400,401,403,404,409,413,422,429,503]); });"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "usuarios",
+      "item": [
+        {
+          "name": "Listar usuarios con perfil estado y noticias como administrador",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Demo-Session",
+                "value": "{{demoSession}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/usuarios",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "usuarios"
+              ]
+            },
+            "description": "Listar usuarios con perfil estado y noticias como administrador",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Respuesta HTTP reconocida\", function () { pm.expect(pm.response.code).to.be.oneOf([200,201,204,400,401,403,404,409,413,422,429,503]); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Consultar una cuenta propia o como administrador",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Demo-Session",
+                "value": "{{demoSession}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/usuarios/{{id}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "usuarios",
+                "{{id}}"
+              ]
+            },
+            "description": "Consultar una cuenta propia o como administrador",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Respuesta HTTP reconocida\", function () { pm.expect(pm.response.code).to.be.oneOf([200,201,204,400,401,403,404,409,413,422,429,503]); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Crear usuario como administrador",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Demo-Session",
+                "value": "{{demoSession}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/usuarios",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "usuarios"
+              ]
+            },
+            "description": "Crear usuario como administrador",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Alumno\",\n  \"apellido\": \"Curso\",\n  \"correo\": \"alumno@example.com\",\n  \"password\": \"ClavePractica2026!\",\n  \"estado_id\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Respuesta HTTP reconocida\", function () { pm.expect(pm.response.code).to.be.oneOf([200,201,204,400,401,403,404,409,413,422,429,503]); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Actualizar usuario como administrador",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "X-Demo-Session",
+                "value": "{{demoSession}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/usuarios/{{id}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "usuarios",
+                "{{id}}"
+              ]
+            },
+            "description": "Actualizar usuario como administrador",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Alumno\",\n  \"apellido\": \"Curso\",\n  \"correo\": \"alumno@example.com\",\n  \"password\": \"ClavePractica2026!\",\n  \"estado_id\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Respuesta HTTP reconocida\", function () { pm.expect(pm.response.code).to.be.oneOf([200,201,204,400,401,403,404,409,413,422,429,503]); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Eliminar usuario sin noticias relacionadas",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "X-Demo-Session",
+                "value": "{{demoSession}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/usuarios/{{id}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "usuarios",
+                "{{id}}"
+              ]
+            },
+            "description": "Eliminar usuario sin noticias relacionadas",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Respuesta HTTP reconocida\", function () { pm.expect(pm.response.code).to.be.oneOf([200,201,204,400,401,403,404,409,413,422,429,503]); });"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "noticias",
+      "item": [
+        {
+          "name": "Listar noticias aprobadas con relaciones",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Demo-Session",
+                "value": "{{demoSession}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/noticias",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "noticias"
+              ]
+            },
+            "description": "Listar noticias aprobadas con relaciones"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Respuesta HTTP reconocida\", function () { pm.expect(pm.response.code).to.be.oneOf([200,201,204,400,401,403,404,409,413,422,429,503]); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Noticias propias o todas como administrador",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Demo-Session",
+                "value": "{{demoSession}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/noticias/gestion",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "noticias",
+                "gestion"
+              ]
+            },
+            "description": "Noticias propias o todas como administrador",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Respuesta HTTP reconocida\", function () { pm.expect(pm.response.code).to.be.oneOf([200,201,204,400,401,403,404,409,413,422,429,503]); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Consultar noticia aprobada con categoría estado y autor",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Demo-Session",
+                "value": "{{demoSession}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/noticias/{{id}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "noticias",
+                "{{id}}"
+              ]
+            },
+            "description": "Consultar noticia aprobada con categoría estado y autor"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Respuesta HTTP reconocida\", function () { pm.expect(pm.response.code).to.be.oneOf([200,201,204,400,401,403,404,409,413,422,429,503]); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Proponer noticia pendiente",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Demo-Session",
+                "value": "{{demoSession}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/noticias",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "noticias"
+              ]
+            },
+            "description": "Proponer noticia pendiente",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"titulo\": \"Una noticia de prueba\",\n  \"contenido\": \"Esta noticia demuestra validaciones, relaciones y moderación.\",\n  \"categoria_id\": 1,\n  \"estado_id\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Respuesta HTTP reconocida\", function () { pm.expect(pm.response.code).to.be.oneOf([200,201,204,400,401,403,404,409,413,422,429,503]); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Editar noticia propia y volver a pendiente",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "X-Demo-Session",
+                "value": "{{demoSession}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/noticias/{{id}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "noticias",
+                "{{id}}"
+              ]
+            },
+            "description": "Editar noticia propia y volver a pendiente",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"titulo\": \"Una noticia de prueba\",\n  \"contenido\": \"Esta noticia demuestra validaciones, relaciones y moderación.\",\n  \"categoria_id\": 1,\n  \"estado_id\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Respuesta HTTP reconocida\", function () { pm.expect(pm.response.code).to.be.oneOf([200,201,204,400,401,403,404,409,413,422,429,503]); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Moderar noticia como administrador",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "X-Demo-Session",
+                "value": "{{demoSession}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/noticias/{{id}}/estatus",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "noticias",
+                "{{id}}",
+                "estatus"
+              ]
+            },
+            "description": "Moderar noticia como administrador",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"estatus\": \"aprobada\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Respuesta HTTP reconocida\", function () { pm.expect(pm.response.code).to.be.oneOf([200,201,204,400,401,403,404,409,413,422,429,503]); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Eliminar noticia propia o como administrador",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "X-Demo-Session",
+                "value": "{{demoSession}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/noticias/{{id}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "noticias",
+                "{{id}}"
+              ]
+            },
+            "description": "Eliminar noticia propia o como administrador",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Respuesta HTTP reconocida\", function () { pm.expect(pm.response.code).to.be.oneOf([200,201,204,400,401,403,404,409,413,422,429,503]); });"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "usuarios-practica",
+      "item": [
+        {
+          "name": "Consultar arreglo con filtros",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Demo-Session",
+                "value": "{{demoSession}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/usuarios-practica",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "usuarios-practica"
+              ]
+            },
+            "description": "Consultar arreglo con filtros"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Respuesta HTTP reconocida\", function () { pm.expect(pm.response.code).to.be.oneOf([200,201,204,400,401,403,404,409,413,422,429,503]); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Agregar al arreglo en memoria",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Demo-Session",
+                "value": "{{demoSession}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/usuarios-practica",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "usuarios-practica"
+              ]
+            },
+            "description": "Agregar al arreglo en memoria",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Elena\",\n  \"edad\": 24\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Respuesta HTTP reconocida\", function () { pm.expect(pm.response.code).to.be.oneOf([200,201,204,400,401,403,404,409,413,422,429,503]); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Obtener usuario del arreglo",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Demo-Session",
+                "value": "{{demoSession}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/usuarios-practica/{{id}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "usuarios-practica",
+                "{{id}}"
+              ]
+            },
+            "description": "Obtener usuario del arreglo"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Respuesta HTTP reconocida\", function () { pm.expect(pm.response.code).to.be.oneOf([200,201,204,400,401,403,404,409,413,422,429,503]); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Eliminar usuario del arreglo",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "X-Demo-Session",
+                "value": "{{demoSession}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/usuarios-practica/{{id}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "usuarios-practica",
+                "{{id}}"
+              ]
+            },
+            "description": "Eliminar usuario del arreglo"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Respuesta HTTP reconocida\", function () { pm.expect(pm.response.code).to.be.oneOf([200,201,204,400,401,403,404,409,413,422,429,503]); });"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "practicas",
+      "item": [
+        {
+          "name": "Primer servidor y middleware",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Demo-Session",
+                "value": "{{demoSession}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/practicas/inicio",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "practicas",
+                "inicio"
+              ]
+            },
+            "description": "Primer servidor y middleware"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Respuesta HTTP reconocida\", function () { pm.expect(pm.response.code).to.be.oneOf([200,201,204,400,401,403,404,409,413,422,429,503]); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Obtener cinco estados",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Demo-Session",
+                "value": "{{demoSession}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/practicas/estados",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "practicas",
+                "estados"
+              ]
+            },
+            "description": "Obtener cinco estados"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Respuesta HTTP reconocida\", function () { pm.expect(pm.response.code).to.be.oneOf([200,201,204,400,401,403,404,409,413,422,429,503]); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Obtener diez pares positivos",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Demo-Session",
+                "value": "{{demoSession}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/practicas/pares",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "practicas",
+                "pares"
+              ]
+            },
+            "description": "Obtener diez pares positivos"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Respuesta HTTP reconocida\", function () { pm.expect(pm.response.code).to.be.oneOf([200,201,204,400,401,403,404,409,413,422,429,503]); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Comparar dos números",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Demo-Session",
+                "value": "{{demoSession}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/practicas/iguales/5/5",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "practicas",
+                "iguales",
+                "5",
+                "5"
+              ]
+            },
+            "description": "Comparar dos números"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Respuesta HTTP reconocida\", function () { pm.expect(pm.response.code).to.be.oneOf([200,201,204,400,401,403,404,409,413,422,429,503]); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Importar y ejecutar el módulo de operaciones",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Demo-Session",
+                "value": "{{demoSession}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/practicas/modulos/5/5",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "practicas",
+                "modulos",
+                "5",
+                "5"
+              ]
+            },
+            "description": "Importar y ejecutar el módulo de operaciones"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Respuesta HTTP reconocida\", function () { pm.expect(pm.response.code).to.be.oneOf([200,201,204,400,401,403,404,409,413,422,429,503]); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Emitir el evento saludo",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Demo-Session",
+                "value": "{{demoSession}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/practicas/eventos",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "practicas",
+                "eventos"
+              ]
+            },
+            "description": "Emitir el evento saludo",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Estudiante\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Respuesta HTTP reconocida\", function () { pm.expect(pm.response.code).to.be.oneOf([200,201,204,400,401,403,404,409,413,422,429,503]); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Provocar respuesta 503",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Demo-Session",
+                "value": "{{demoSession}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/practicas/error",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "practicas",
+                "error"
+              ]
+            },
+            "description": "Provocar respuesta 503"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Respuesta HTTP reconocida\", function () { pm.expect(pm.response.code).to.be.oneOf([200,201,204,400,401,403,404,409,413,422,429,503]); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Registro de la sesión indicada en X-Demo-Session",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Demo-Session",
+                "value": "{{demoSession}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/practicas/solicitudes",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "practicas",
+                "solicitudes"
+              ]
+            },
+            "description": "Registro de la sesión indicada en X-Demo-Session"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Respuesta HTTP reconocida\", function () { pm.expect(pm.response.code).to.be.oneOf([200,201,204,400,401,403,404,409,413,422,429,503]); });"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "teoria",
+      "item": [
+        {
+          "name": "Leer req.params",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Demo-Session",
+                "value": "{{demoSession}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/teoria/usuarios/{{id}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "teoria",
+                "usuarios",
+                "{{id}}"
+              ]
+            },
+            "description": "Leer req.params"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Respuesta HTTP reconocida\", function () { pm.expect(pm.response.code).to.be.oneOf([200,201,204,400,401,403,404,409,413,422,429,503]); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Leer req.query",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Demo-Session",
+                "value": "{{demoSession}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/teoria/busqueda",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "teoria",
+                "busqueda"
+              ]
+            },
+            "description": "Leer req.query"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Respuesta HTTP reconocida\", function () { pm.expect(pm.response.code).to.be.oneOf([200,201,204,400,401,403,404,409,413,422,429,503]); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Leer req.body",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Demo-Session",
+                "value": "{{demoSession}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/teoria/usuarios",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "teoria",
+                "usuarios"
+              ]
+            },
+            "description": "Leer req.body",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Estudiante\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Respuesta HTTP reconocida\", function () { pm.expect(pm.response.code).to.be.oneOf([200,201,204,400,401,403,404,409,413,422,429,503]); });"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

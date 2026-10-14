@@ -1,0 +1,15 @@
+const { Router } = require('express');
+const { query } = require('express-validator');
+const { authenticate, administrator } = require('../middlewares/auth');
+const { id, body, validate } = require('../validators/common');
+const rules = require('../validators/NewValidator');
+const c = require('../controllers/NewController');
+const r = Router();
+r.get('/', query('categoria_id').optional().isInt({ min: 1 }), query('estado_id').optional().isInt({ min: 1 }), query('q').optional().isString().isLength({ max: 180 }), validate, c.list);
+r.get('/gestion', authenticate, c.management);
+r.get('/:id', id, validate, c.one);
+r.post('/', authenticate, rules, validate, c.create);
+r.put('/:id', authenticate, id, rules, validate, c.update);
+r.patch('/:id/estatus', authenticate, administrator, id, body('estatus').isIn(['aprobada', 'rechazada']).withMessage('Usa aprobada o rechazada.'), validate, c.moderate);
+r.delete('/:id', authenticate, id, validate, c.remove);
+module.exports = r;
