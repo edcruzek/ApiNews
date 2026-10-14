@@ -1,5 +1,14 @@
 # Despliegue de ApiNews
 
+## Enlaces de esta entrega
+
+- Laboratorio: https://api-news-edcruzek.onrender.com
+- Swagger: https://api-news-edcruzek.onrender.com/docs
+- Código público: https://github.com/edcruzek/ApiNews
+- Informe: `informe/Informe_Express_ApiNews.pptx` y su versión PDF.
+
+El 13 de octubre de 2026 se comprobó desde internet una respuesta HTTP 200 de `/api/salud` con MySQL, el registro de un contribuidor y el inicio de sesión. Render usa un servicio gratuito; Clever Cloud usa MySQL DEV (10 MB, cinco conexiones). La contraseña de la cuenta administradora se entrega en un archivo privado local, excluido del repositorio.
+
 La interfaz y la API pertenecen a una sola aplicación Express. Render ejecuta `npm start` y la base MySQL se conecta desde `config.db.js`.
 
 ## Render

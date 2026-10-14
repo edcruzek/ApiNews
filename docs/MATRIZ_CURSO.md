@@ -22,6 +22,6 @@
 | 7.2 Validaciones | validators por recurso y validate | Enviar datos inválidos y observar 422 |
 | 8 JWT | AuthController y middleware authenticate | Registro, login, 401 sin token y 403 sin permiso |
 | 9 Preparación | CORS, JSON de 2 MB, dotenv y .env.example | Bloque Configuración y despliegue |
-| 10 Publicación | render.yaml y DESPLIEGUE.md | Requiere verificar enlace y base alojada al completar despliegue |
+| 10 Publicación | render.yaml y DESPLIEGUE.md | https://api-news-edcruzek.onrender.com con Express y MySQL alojado en Clever Cloud |
 
 No se expone ni se entrega la configuración .env privada. La web añade una demostración visual a las prácticas sin sustituir Express o MySQL por respuestas simuladas.
